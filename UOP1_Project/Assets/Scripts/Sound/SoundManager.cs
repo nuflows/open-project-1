@@ -8,15 +8,15 @@ public class SoundManager : MonoBehaviour
 {
 	public static SoundManager singleton;
 
-	[Header ("Init Variables")]
-	[Tooltip ("Amount of sound emitters created on Start")]
+	[Header("Init Variables")]
+	[Tooltip("Amount of sound emitters created on Start")]
 	public int initialPoolSize = 1;
-	[Tooltip ("Frequency at which the sound manager will delete extra emitters that are not in use")]
+	[Tooltip("Frequency at which the sound manager will delete extra emitters that are not in use")]
 	public float trimFrequency = 5;
-	[Tooltip ("Extra time after instanced emitters are not in use anymore before destroying them")]
+	[Tooltip("Extra time after instanced emitters are not in use anymore before destroying them")]
 	public float extraTimeBeforeTrim = 5;
 
-	[Header ("Mixer Groups")]
+	[Header("Mixer Groups")]
 	public AudioMixerGroup masterMixer;
 	public AudioMixerGroup sfxMixer;
 	public AudioMixerGroup musicMixer;
@@ -38,33 +38,34 @@ public class SoundManager : MonoBehaviour
 	}
 
 	void Start()
-    {
+	{
 		InitEmitterPool();
 
 		InvokeRepeating("TrimUnusedEmitters", trimFrequency, trimFrequency);
-    }
+	}
 
 	#region mixer groups functions
 	public static bool SetGroupVolume(AudioMixerGroup group, float volume)
 	{
 		return group.audioMixer.SetFloat("Volume", NormalizedToMixerValue(volume));
 	}
-	
+
 	public static bool GetGroupVolume(AudioMixerGroup group, out float volume)
 	{
-	        if(group.audioMixer.GetFloat("Volume", out float rawVolume)){
-	                volume = MixerValueNormalized(rawVolume);
-	                return true;
-	        }
-	        volume = default;
-	        return false;
+		if (group.audioMixer.GetFloat("Volume", out float rawVolume))
+		{
+			volume = MixerValueNormalized(rawVolume);
+			return true;
+		}
+		volume = default;
+		return false;
 	}
 
 	#region mixerHelpers
 	// Both MixerValueNormalized and NormalizedToMixerValue functions are used for easier transformations when using UI sliders normalized format
 	private static float MixerValueNormalized(float value)
 	{
-		return  (-(value - 80) / 80) - 1;
+		return (-(value - 80) / 80) - 1;
 	}
 	private static float NormalizedToMixerValue(float normalizedValue)
 	{
@@ -89,7 +90,7 @@ public class SoundManager : MonoBehaviour
 		foreach (SoundEmitter emit in _soundEmitterPool)
 		{
 			if (emit.IsInUse())
-   				emit.StopSound();
+				emit.StopSound();
 		}
 	}
 	public void StopAllNonLoopSounds()

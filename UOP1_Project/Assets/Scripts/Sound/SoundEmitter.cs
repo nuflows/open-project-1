@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-[RequireComponent (typeof(AudioSource))]
+[RequireComponent(typeof(AudioSource))]
 public class SoundEmitter : MonoBehaviour
 {
 	private AudioSource _audioSource;
@@ -20,9 +20,9 @@ public class SoundEmitter : MonoBehaviour
 
 	// Start is called before the first frame update
 	void Start()
-    {
+	{
 		_audioSource.playOnAwake = false;
-    }
+	}
 
 	public void PlaySound(AudioClip clip, SoundEmitterSettings settings, Vector3 position = default)
 	{
